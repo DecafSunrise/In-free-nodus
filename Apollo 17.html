@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 750px;
+                 height: 1000px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "apollo", "label": "apollo", "shape": "dot", "size": 18}, {"color": "#97c2fc", "id": "17", "label": "17", "shape": "dot", "size": 8}, {"color": "#97c2fc", "id": "december", "label": "december", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "719", "label": "719", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "final", "label": "final", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "mission", "label": "mission", "shape": "dot", "size": 24}, {"color": "#97c2fc", "id": "nasa", "label": "nasa", "shape": "dot", "size": 24}, {"color": "#97c2fc", "id": "program", "label": "program", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "recent", "label": "recent", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "time", "label": "time", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "1972", "label": "1972", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "send", "label": "send", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "scientist", "label": "scientist", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "moon", "label": "moon", "shape": "dot", "size": 48}, {"color": "#97c2fc", "id": "heavy", "label": "heavy", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "emphasis", "label": "emphasis", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "science", "label": "science", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "place", "label": "place", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "joe", "label": "joe", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "engle", "label": "engle", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "pressure", "label": "pressure", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "human", "label": "human", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "set", "label": "set", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "foot", "label": "foot", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "traveled", "label": "traveled", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "beyond", "label": "beyond", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "low", "label": "low", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "harrison", "label": "harrison", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "schmitt", "label": "schmitt", "shape": "dot", "size": 24}, {"color": "#97c2fc", "id": "walked", "label": "walked", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "command", "label": "command", "shape": "dot", "size": 16}, {"color": "#97c2fc", "id": "module", "label": "module", "shape": "dot", "size": 24}, {"color": "#97c2fc", "id": "pilot", "label": "pilot", "shape": "dot", "size": 22}, {"color": "#97c2fc", "id": "professional", "label": "professional", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "geologist", "label": "geologist", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "land", "label": "land", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "selected", "label": "selected", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "earth", "label": "earth", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "orbit", "label": "orbit", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "commander", "label": "commander", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "gene", "label": "gene", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "cernan", "label": "cernan", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "lunar", "label": "lunar", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "ronald", "label": "ronald", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "evans", "label": "evans", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "mouse", "label": "mouse", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "orbited", "label": "orbited", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "five", "label": "five", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "meant", "label": "meant", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "inclusion", "label": "inclusion", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "number", "label": "number", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "new", "label": "new", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "experiment", "label": "experiment", "shape": "dot", "size": 20}, {"color": "#97c2fc", "id": "including", "label": "including", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "biological", "label": "biological", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "containing", "label": "containing", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "carried", "label": "carried", "shape": "dot", "size": 6}]);
+                  edges = new vis.DataSet([{"from": "apollo", "to": "17", "width": 3}, {"from": "apollo", "to": "december", "width": 2}, {"from": "apollo", "to": "719", "width": 1}, {"from": "apollo", "to": "final", "width": 1}, {"from": "apollo", "to": "mission", "width": 2}, {"from": "apollo", "to": "nasa", "width": 3}, {"from": "apollo", "to": "program", "width": 3}, {"from": "apollo", "to": "recent", "width": 2}, {"from": "apollo", "to": "time", "width": 1}, {"from": "17", "to": "december", "width": 3}, {"from": "17", "to": "719", "width": 2}, {"from": "17", "to": "1972", "width": 1}, {"from": "december", "to": "719", "width": 3}, {"from": "december", "to": "1972", "width": 2}, {"from": "december", "to": "final", "width": 1}, {"from": "719", "to": "1972", "width": 3}, {"from": "719", "to": "final", "width": 2}, {"from": "719", "to": "mission", "width": 1}, {"from": "1972", "to": "final", "width": 3}, {"from": "1972", "to": "mission", "width": 2}, {"from": "1972", "to": "nasa", "width": 1}, {"from": "final", "to": "mission", "width": 3}, {"from": "final", "to": "nasa", "width": 2}, {"from": "mission", "to": "nasa", "width": 3}, {"from": "mission", "to": "program", "width": 1}, {"from": "mission", "to": "send", "width": 1}, {"from": "mission", "to": "scientist", "width": 2}, {"from": "mission", "to": "moon", "width": 3}, {"from": "mission", "to": "heavy", "width": 3}, {"from": "mission", "to": "emphasis", "width": 2}, {"from": "mission", "to": "science", "width": 1}, {"from": "nasa", "to": "program", "width": 2}, {"from": "nasa", "to": "recent", "width": 1}, {"from": "nasa", "to": "place", "width": 1}, {"from": "nasa", "to": "joe", "width": 2}, {"from": "nasa", "to": "engle", "width": 3}, {"from": "nasa", "to": "pressure", "width": 3}, {"from": "nasa", "to": "send", "width": 2}, {"from": "nasa", "to": "scientist", "width": 1}, {"from": "program", "to": "recent", "width": 3}, {"from": "program", "to": "time", "width": 2}, {"from": "program", "to": "human", "width": 1}, {"from": "recent", "to": "time", "width": 3}, {"from": "recent", "to": "human", "width": 2}, {"from": "recent", "to": "set", "width": 1}, {"from": "time", "to": "human", "width": 3}, {"from": "time", "to": "set", "width": 2}, {"from": "time", "to": "foot", "width": 1}, {"from": "human", "to": "set", "width": 3}, {"from": "human", "to": "foot", "width": 2}, {"from": "human", "to": "moon", "width": 1}, {"from": "set", "to": "foot", "width": 3}, {"from": "set", "to": "moon", "width": 2}, {"from": "set", "to": "traveled", "width": 1}, {"from": "foot", "to": "moon", "width": 3}, {"from": "foot", "to": "traveled", "width": 2}, {"from": "foot", "to": "beyond", "width": 1}, {"from": "moon", "to": "traveled", "width": 3}, {"from": "moon", "to": "beyond", "width": 2}, {"from": "moon", "to": "low", "width": 1}, {"from": "moon", "to": "harrison", "width": 1}, {"from": "moon", "to": "schmitt", "width": 2}, {"from": "moon", "to": "walked", "width": 3}, {"from": "moon", "to": "command", "width": 3}, {"from": "moon", "to": "module", "width": 2}, {"from": "moon", "to": "pilot", "width": 1}, {"from": "moon", "to": "professional", "width": 1}, {"from": "moon", "to": "geologist", "width": 2}, {"from": "moon", "to": "land", "width": 3}, {"from": "moon", "to": "selected", "width": 3}, {"from": "moon", "to": "place", "width": 2}, {"from": "moon", "to": "joe", "width": 1}, {"from": "moon", "to": "pressure", "width": 1}, {"from": "moon", "to": "send", "width": 2}, {"from": "moon", "to": "scientist", "width": 3}, {"from": "moon", "to": "heavy", "width": 2}, {"from": "moon", "to": "emphasis", "width": 1}, {"from": "traveled", "to": "beyond", "width": 3}, {"from": "traveled", "to": "low", "width": 2}, {"from": "traveled", "to": "earth", "width": 1}, {"from": "beyond", "to": "low", "width": 3}, {"from": "beyond", "to": "earth", "width": 2}, {"from": "beyond", "to": "orbit", "width": 1}, {"from": "low", "to": "earth", "width": 3}, {"from": "low", "to": "orbit", "width": 2}, {"from": "low", "to": "commander", "width": 1}, {"from": "earth", "to": "orbit", "width": 3}, {"from": "earth", "to": "commander", "width": 2}, {"from": "earth", "to": "gene", "width": 1}, {"from": "orbit", "to": "commander", "width": 3}, {"from": "orbit", "to": "gene", "width": 2}, {"from": "orbit", "to": "cernan", "width": 1}, {"from": "commander", "to": "gene", "width": 3}, {"from": "commander", "to": "cernan", "width": 2}, {"from": "commander", "to": "lunar", "width": 1}, {"from": "gene", "to": "cernan", "width": 3}, {"from": "gene", "to": "lunar", "width": 2}, {"from": "gene", "to": "module", "width": 1}, {"from": "cernan", "to": "lunar", "width": 3}, {"from": "cernan", "to": "module", "width": 2}, {"from": "cernan", "to": "pilot", "width": 1}, {"from": "lunar", "to": "module", "width": 3}, {"from": "lunar", "to": "pilot", "width": 2}, {"from": "lunar", "to": "harrison", "width": 1}, {"from": "module", "to": "pilot", "width": 3}, {"from": "module", "to": "harrison", "width": 2}, {"from": "module", "to": "schmitt", "width": 1}, {"from": "module", "to": "walked", "width": 1}, {"from": "module", "to": "command", "width": 3}, {"from": "module", "to": "ronald", "width": 2}, {"from": "module", "to": "evans", "width": 1}, {"from": "module", "to": "mouse", "width": 1}, {"from": "pilot", "to": "harrison", "width": 3}, {"from": "pilot", "to": "schmitt", "width": 2}, {"from": "pilot", "to": "walked", "width": 1}, {"from": "pilot", "to": "command", "width": 2}, {"from": "pilot", "to": "ronald", "width": 3}, {"from": "pilot", "to": "evans", "width": 2}, {"from": "pilot", "to": "orbited", "width": 1}, {"from": "harrison", "to": "schmitt", "width": 3}, {"from": "harrison", "to": "walked", "width": 2}, {"from": "schmitt", "to": "walked", "width": 3}, {"from": "schmitt", "to": "command", "width": 1}, {"from": "schmitt", "to": "ronald", "width": 1}, {"from": "schmitt", "to": "evans", "width": 2}, {"from": "schmitt", "to": "orbited", "width": 3}, {"from": "schmitt", "to": "professional", "width": 3}, {"from": "schmitt", "to": "geologist", "width": 2}, {"from": "schmitt", "to": "land", "width": 1}, {"from": "walked", "to": "command", "width": 2}, {"from": "command", "to": "ronald", "width": 1}, {"from": "command", "to": "five", "width": 1}, {"from": "command", "to": "mouse", "width": 2}, {"from": "ronald", "to": "evans", "width": 3}, {"from": "ronald", "to": "orbited", "width": 2}, {"from": "evans", "to": "orbited", "width": 3}, {"from": "evans", "to": "professional", "width": 1}, {"from": "orbited", "to": "professional", "width": 2}, {"from": "orbited", "to": "geologist", "width": 1}, {"from": "professional", "to": "geologist", "width": 3}, {"from": "professional", "to": "land", "width": 2}, {"from": "geologist", "to": "land", "width": 3}, {"from": "geologist", "to": "selected", "width": 1}, {"from": "land", "to": "selected", "width": 2}, {"from": "land", "to": "place", "width": 1}, {"from": "selected", "to": "place", "width": 3}, {"from": "selected", "to": "joe", "width": 2}, {"from": "selected", "to": "engle", "width": 1}, {"from": "place", "to": "joe", "width": 3}, {"from": "place", "to": "engle", "width": 2}, {"from": "joe", "to": "engle", "width": 3}, {"from": "joe", "to": "pressure", "width": 1}, {"from": "engle", "to": "pressure", "width": 2}, {"from": "engle", "to": "send", "width": 1}, {"from": "pressure", "to": "send", "width": 3}, {"from": "pressure", "to": "scientist", "width": 2}, {"from": "send", "to": "scientist", "width": 3}, {"from": "scientist", "to": "heavy", "width": 1}, {"from": "heavy", "to": "emphasis", "width": 3}, {"from": "heavy", "to": "science", "width": 2}, {"from": "heavy", "to": "meant", "width": 1}, {"from": "emphasis", "to": "science", "width": 3}, {"from": "emphasis", "to": "meant", "width": 2}, {"from": "emphasis", "to": "inclusion", "width": 1}, {"from": "science", "to": "meant", "width": 3}, {"from": "science", "to": "inclusion", "width": 2}, {"from": "science", "to": "number", "width": 1}, {"from": "meant", "to": "inclusion", "width": 3}, {"from": "meant", "to": "number", "width": 2}, {"from": "meant", "to": "new", "width": 1}, {"from": "inclusion", "to": "number", "width": 3}, {"from": "inclusion", "to": "new", "width": 2}, {"from": "inclusion", "to": "experiment", "width": 1}, {"from": "number", "to": "new", "width": 3}, {"from": "number", "to": "experiment", "width": 2}, {"from": "number", "to": "including", "width": 1}, {"from": "new", "to": "experiment", "width": 3}, {"from": "new", "to": "including", "width": 2}, {"from": "new", "to": "biological", "width": 1}, {"from": "experiment", "to": "including", "width": 2}, {"from": "experiment", "to": "biological", "width": 3}, {"from": "experiment", "to": "experiment", "width": 1}, {"from": "experiment", "to": "containing", "width": 3}, {"from": "experiment", "to": "five", "width": 2}, {"from": "experiment", "to": "mouse", "width": 1}, {"from": "including", "to": "biological", "width": 3}, {"from": "including", "to": "containing", "width": 1}, {"from": "biological", "to": "containing", "width": 2}, {"from": "biological", "to": "five", "width": 1}, {"from": "containing", "to": "five", "width": 3}, {"from": "containing", "to": "mouse", "width": 2}, {"from": "containing", "to": "carried", "width": 1}, {"from": "five", "to": "mouse", "width": 3}, {"from": "five", "to": "carried", "width": 2}, {"from": "mouse", "to": "carried", "width": 3}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

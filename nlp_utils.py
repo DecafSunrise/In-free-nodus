@@ -37,13 +37,6 @@ def normalize_unicode(input_text):
     return unicodedata.normalize('NFKD', input_text).encode('ascii', 'ignore').decode('utf-8', 'ignore')
 
 def replace_abbreviations(x):
-#     """
-#     This is kind of dogsh*t; consider using the "contractions" package instead
-#     """
-#     for key in abbreviations:
-#         if key in x:
-#             x = x.replace(key,abbreviations[key])
-
     x = contractions.fix(x)
 
     return x
@@ -53,14 +46,33 @@ def get_just_words(doc):
 
 def remove_stopwords(doc):
     cleaned_doc = ' '.join([word for word in doc.split() if word not in english_stopwords])
-    cleaned_doc = re.sub(r"(\s[.]{1}\s)", '. ', cleaned_doc)
-    cleaned_doc = re.sub(r"(\s[,]{1}\s)", ', ', cleaned_doc)
-    cleaned_doc = re.sub(r"(\s[!]{1}\s)", '! ', cleaned_doc)
-    cleaned_doc = re.sub(r"(\s[?]{1}\s)", '? ', cleaned_doc)
+    cleaned_doc = re.sub(r"(\s[.]\s)", '. ', cleaned_doc)
+    cleaned_doc = re.sub(r"(\s[,]\s)", ', ', cleaned_doc)
+    cleaned_doc = re.sub(r"(\s[!]\s)", '! ', cleaned_doc)
+    cleaned_doc = re.sub(r"(\s[?]\s)", '? ', cleaned_doc)
     
     return cleaned_doc
 
 def lemmatize(doc):
     return " ".join([lemmatizer.lemmatize(word) for word in word_tokenize(doc)])
 
+def remove_footnotes(doc):
+    return re.sub(r"\[[\d]{1,3}\]", "", doc)
 
+def clean_text(input_text):
+    """
+    Infranodus proper uses a separate stage to remove stopwords after normalizing the text
+    """
+    out_text = lowercase_text(input_text)
+    out_text = normalize_whitespace(out_text)
+    out_text = replace_html_tags(out_text)
+    out_text = remove_emails(out_text)
+    out_text = remove_urls(out_text)
+    out_text = normalize_unicode(out_text)
+    out_text = replace_abbreviations(out_text)
+    out_text = get_just_words(out_text)
+    out_text = remove_stopwords(out_text)
+    out_text = lemmatize(out_text)
+    out_text = remove_footnotes(out_text)
+    
+    return out_text
