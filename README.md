@@ -1,4 +1,4 @@
-# Infranous
+# In-free-nodus
 ### Generate Network Graphs from Text
 ![image](https://user-images.githubusercontent.com/36832027/206894857-8ea2bd6d-1102-4b5b-a710-96935cacf1ad.png)
 
