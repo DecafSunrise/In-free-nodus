@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 750px;
+                 height: 1000px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "john", "label": "john", "shape": "dot", "size": 6}, {"color": "#97c2fc", "id": "ronald", "label": "ronald", "shape": "dot", "size": 8}, {"color": "#97c2fc", "id": "reuel", "label": "reuel", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "tolkien", "label": "tolkien", "shape": "dot", "size": 34}, {"color": "#97c2fc", "id": "cbe", "label": "cbe", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "frsl", "label": "frsl", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "rul", "label": "rul", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "ring", "label": "ring", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "1925", "label": "1925", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "1945", "label": "1945", "shape": "dot", "size": 22}, {"color": "#97c2fc", "id": "rawlinson", "label": "rawlinson", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "bosworth", "label": "bosworth", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "professor", "label": "professor", "shape": "dot", "size": 24}, {"color": "#97c2fc", "id": "retirement", "label": "retirement", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "1959", "label": "1959", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "close", "label": "close", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "friend", "label": "friend", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "c", "label": "c", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "tlkin", "label": "tlkin", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "rool", "label": "rool", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "tolkeena", "label": "tolkeena", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "3", "label": "3", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "january", "label": "january", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "1892", "label": "1892", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "2", "label": "2", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "september", "label": "september", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "1973", "label": "1973", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "english", "label": "english", "shape": "dot", "size": 24}, {"color": "#97c2fc", "id": "writer", "label": "writer", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "philologist", "label": "philologist", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "author", "label": "author", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "become", "label": "become", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "merton", "label": "merton", "shape": "dot", "size": 22}, {"color": "#97c2fc", "id": "language", "label": "language", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "literature", "label": "literature", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "fellow", "label": "fellow", "shape": "dot", "size": 22}, {"color": "#97c2fc", "id": "high", "label": "high", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "fantasy", "label": "fantasy", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "work", "label": "work", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "hobbit", "label": "hobbit", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "lord", "label": "lord", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "college", "label": "college", "shape": "dot", "size": 22}, {"color": "#97c2fc", "id": "held", "label": "held", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "position", "label": "position", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "anglosaxon", "label": "anglosaxon", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "pembroke", "label": "pembroke", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "university", "label": "university", "shape": "dot", "size": 18}, {"color": "#97c2fc", "id": "oxford", "label": "oxford", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "moved", "label": "moved", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "within", "label": "within", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "lewis", "label": "lewis", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "comember", "label": "comember", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "informal", "label": "informal", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "literary", "label": "literary", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "discussion", "label": "discussion", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "group", "label": "group", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "inkling", "label": "inkling", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "appointed", "label": "appointed", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "commander", "label": "commander", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "order", "label": "order", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "british", "label": "british", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "empire", "label": "empire", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "queen", "label": "queen", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "elizabeth", "label": "elizabeth", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "ii", "label": "ii", "shape": "dot", "size": 12}, {"color": "#97c2fc", "id": "28", "label": "28", "shape": "dot", "size": 6}, {"color": "#97c2fc", "id": "march", "label": "march", "shape": "dot", "size": 4}, {"color": "#97c2fc", "id": "1972", "label": "1972", "shape": "dot", "size": 2}]);
+                  edges = new vis.DataSet([{"from": "john", "to": "ronald", "width": 3}, {"from": "john", "to": "reuel", "width": 2}, {"from": "john", "to": "tolkien", "width": 1}, {"from": "ronald", "to": "reuel", "width": 3}, {"from": "ronald", "to": "tolkien", "width": 2}, {"from": "ronald", "to": "cbe", "width": 1}, {"from": "reuel", "to": "tolkien", "width": 3}, {"from": "reuel", "to": "cbe", "width": 2}, {"from": "reuel", "to": "frsl", "width": 1}, {"from": "tolkien", "to": "cbe", "width": 3}, {"from": "tolkien", "to": "frsl", "width": 2}, {"from": "tolkien", "to": "rul", "width": 1}, {"from": "tolkien", "to": "ring", "width": 1}, {"from": "tolkien", "to": "1925", "width": 2}, {"from": "tolkien", "to": "1945", "width": 1}, {"from": "tolkien", "to": "rawlinson", "width": 3}, {"from": "tolkien", "to": "bosworth", "width": 2}, {"from": "tolkien", "to": "professor", "width": 1}, {"from": "tolkien", "to": "retirement", "width": 2}, {"from": "tolkien", "to": "1959", "width": 3}, {"from": "tolkien", "to": "close", "width": 3}, {"from": "tolkien", "to": "friend", "width": 2}, {"from": "tolkien", "to": "c", "width": 1}, {"from": "cbe", "to": "frsl", "width": 3}, {"from": "cbe", "to": "rul", "width": 2}, {"from": "cbe", "to": "tlkin", "width": 1}, {"from": "frsl", "to": "rul", "width": 3}, {"from": "frsl", "to": "tlkin", "width": 2}, {"from": "frsl", "to": "rool", "width": 1}, {"from": "rul", "to": "tlkin", "width": 3}, {"from": "rul", "to": "rool", "width": 2}, {"from": "rul", "to": "tolkeena", "width": 1}, {"from": "tlkin", "to": "rool", "width": 3}, {"from": "tlkin", "to": "tolkeena", "width": 2}, {"from": "tlkin", "to": "3", "width": 1}, {"from": "rool", "to": "tolkeena", "width": 3}, {"from": "rool", "to": "3", "width": 2}, {"from": "rool", "to": "january", "width": 1}, {"from": "tolkeena", "to": "3", "width": 3}, {"from": "tolkeena", "to": "january", "width": 2}, {"from": "tolkeena", "to": "1892", "width": 1}, {"from": "3", "to": "january", "width": 3}, {"from": "3", "to": "1892", "width": 2}, {"from": "3", "to": "2", "width": 1}, {"from": "january", "to": "1892", "width": 3}, {"from": "january", "to": "2", "width": 2}, {"from": "january", "to": "september", "width": 1}, {"from": "1892", "to": "2", "width": 3}, {"from": "1892", "to": "september", "width": 2}, {"from": "1892", "to": "1973", "width": 1}, {"from": "2", "to": "september", "width": 3}, {"from": "2", "to": "1973", "width": 2}, {"from": "2", "to": "english", "width": 1}, {"from": "september", "to": "1973", "width": 3}, {"from": "september", "to": "english", "width": 2}, {"from": "september", "to": "writer", "width": 1}, {"from": "1973", "to": "english", "width": 3}, {"from": "1973", "to": "writer", "width": 2}, {"from": "1973", "to": "philologist", "width": 1}, {"from": "english", "to": "writer", "width": 3}, {"from": "english", "to": "philologist", "width": 2}, {"from": "english", "to": "author", "width": 1}, {"from": "english", "to": "become", "width": 1}, {"from": "english", "to": "merton", "width": 2}, {"from": "english", "to": "professor", "width": 3}, {"from": "english", "to": "language", "width": 3}, {"from": "english", "to": "literature", "width": 2}, {"from": "english", "to": "fellow", "width": 1}, {"from": "writer", "to": "philologist", "width": 3}, {"from": "writer", "to": "author", "width": 2}, {"from": "writer", "to": "high", "width": 1}, {"from": "philologist", "to": "author", "width": 3}, {"from": "philologist", "to": "high", "width": 2}, {"from": "philologist", "to": "fantasy", "width": 1}, {"from": "author", "to": "high", "width": 3}, {"from": "author", "to": "fantasy", "width": 2}, {"from": "author", "to": "work", "width": 1}, {"from": "high", "to": "fantasy", "width": 3}, {"from": "high", "to": "work", "width": 2}, {"from": "high", "to": "hobbit", "width": 1}, {"from": "fantasy", "to": "work", "width": 3}, {"from": "fantasy", "to": "hobbit", "width": 2}, {"from": "fantasy", "to": "lord", "width": 1}, {"from": "work", "to": "hobbit", "width": 3}, {"from": "work", "to": "lord", "width": 2}, {"from": "work", "to": "ring", "width": 1}, {"from": "hobbit", "to": "lord", "width": 3}, {"from": "hobbit", "to": "ring", "width": 2}, {"from": "hobbit", "to": "1925", "width": 1}, {"from": "lord", "to": "ring", "width": 3}, {"from": "lord", "to": "1925", "width": 2}, {"from": "lord", "to": "1945", "width": 1}, {"from": "ring", "to": "1925", "width": 3}, {"from": "ring", "to": "1945", "width": 2}, {"from": "1925", "to": "1945", "width": 3}, {"from": "1925", "to": "rawlinson", "width": 1}, {"from": "1945", "to": "rawlinson", "width": 2}, {"from": "1945", "to": "bosworth", "width": 1}, {"from": "1945", "to": "college", "width": 1}, {"from": "1945", "to": "held", "width": 2}, {"from": "1945", "to": "position", "width": 3}, {"from": "1945", "to": "retirement", "width": 3}, {"from": "1945", "to": "1959", "width": 2}, {"from": "rawlinson", "to": "bosworth", "width": 3}, {"from": "rawlinson", "to": "professor", "width": 2}, {"from": "rawlinson", "to": "anglosaxon", "width": 1}, {"from": "bosworth", "to": "professor", "width": 3}, {"from": "bosworth", "to": "anglosaxon", "width": 2}, {"from": "bosworth", "to": "fellow", "width": 1}, {"from": "professor", "to": "anglosaxon", "width": 3}, {"from": "professor", "to": "fellow", "width": 2}, {"from": "professor", "to": "pembroke", "width": 1}, {"from": "professor", "to": "university", "width": 1}, {"from": "professor", "to": "become", "width": 2}, {"from": "professor", "to": "merton", "width": 3}, {"from": "professor", "to": "language", "width": 2}, {"from": "professor", "to": "literature", "width": 1}, {"from": "anglosaxon", "to": "fellow", "width": 3}, {"from": "anglosaxon", "to": "pembroke", "width": 2}, {"from": "anglosaxon", "to": "college", "width": 1}, {"from": "fellow", "to": "pembroke", "width": 3}, {"from": "fellow", "to": "college", "width": 2}, {"from": "fellow", "to": "university", "width": 1}, {"from": "fellow", "to": "language", "width": 2}, {"from": "fellow", "to": "literature", "width": 3}, {"from": "fellow", "to": "merton", "width": 3}, {"from": "fellow", "to": "held", "width": 1}, {"from": "pembroke", "to": "college", "width": 3}, {"from": "pembroke", "to": "university", "width": 2}, {"from": "pembroke", "to": "oxford", "width": 1}, {"from": "college", "to": "university", "width": 3}, {"from": "college", "to": "oxford", "width": 2}, {"from": "college", "to": "moved", "width": 1}, {"from": "college", "to": "literature", "width": 1}, {"from": "college", "to": "merton", "width": 3}, {"from": "college", "to": "held", "width": 3}, {"from": "college", "to": "position", "width": 2}, {"from": "university", "to": "oxford", "width": 1}, {"from": "university", "to": "moved", "width": 2}, {"from": "university", "to": "within", "width": 3}, {"from": "university", "to": "become", "width": 3}, {"from": "university", "to": "merton", "width": 2}, {"from": "oxford", "to": "moved", "width": 3}, {"from": "oxford", "to": "within", "width": 2}, {"from": "moved", "to": "within", "width": 3}, {"from": "moved", "to": "become", "width": 1}, {"from": "within", "to": "become", "width": 2}, {"from": "within", "to": "merton", "width": 1}, {"from": "become", "to": "merton", "width": 3}, {"from": "merton", "to": "language", "width": 1}, {"from": "merton", "to": "literature", "width": 2}, {"from": "merton", "to": "held", "width": 2}, {"from": "merton", "to": "position", "width": 1}, {"from": "language", "to": "literature", "width": 3}, {"from": "held", "to": "position", "width": 3}, {"from": "held", "to": "retirement", "width": 1}, {"from": "position", "to": "retirement", "width": 2}, {"from": "position", "to": "1959", "width": 1}, {"from": "retirement", "to": "1959", "width": 3}, {"from": "retirement", "to": "close", "width": 1}, {"from": "1959", "to": "close", "width": 2}, {"from": "1959", "to": "friend", "width": 1}, {"from": "close", "to": "friend", "width": 3}, {"from": "close", "to": "c", "width": 2}, {"from": "close", "to": "lewis", "width": 1}, {"from": "friend", "to": "c", "width": 3}, {"from": "friend", "to": "lewis", "width": 2}, {"from": "friend", "to": "comember", "width": 1}, {"from": "c", "to": "lewis", "width": 3}, {"from": "c", "to": "comember", "width": 2}, {"from": "c", "to": "informal", "width": 1}, {"from": "lewis", "to": "comember", "width": 3}, {"from": "lewis", "to": "informal", "width": 2}, {"from": "lewis", "to": "literary", "width": 1}, {"from": "comember", "to": "informal", "width": 3}, {"from": "comember", "to": "literary", "width": 2}, {"from": "comember", "to": "discussion", "width": 1}, {"from": "informal", "to": "literary", "width": 3}, {"from": "informal", "to": "discussion", "width": 2}, {"from": "informal", "to": "group", "width": 1}, {"from": "literary", "to": "discussion", "width": 3}, {"from": "literary", "to": "group", "width": 2}, {"from": "literary", "to": "inkling", "width": 1}, {"from": "discussion", "to": "group", "width": 3}, {"from": "discussion", "to": "inkling", "width": 2}, {"from": "discussion", "to": "appointed", "width": 1}, {"from": "group", "to": "inkling", "width": 3}, {"from": "group", "to": "appointed", "width": 2}, {"from": "group", "to": "commander", "width": 1}, {"from": "inkling", "to": "appointed", "width": 3}, {"from": "inkling", "to": "commander", "width": 2}, {"from": "inkling", "to": "order", "width": 1}, {"from": "appointed", "to": "commander", "width": 3}, {"from": "appointed", "to": "order", "width": 2}, {"from": "appointed", "to": "british", "width": 1}, {"from": "commander", "to": "order", "width": 3}, {"from": "commander", "to": "british", "width": 2}, {"from": "commander", "to": "empire", "width": 1}, {"from": "order", "to": "british", "width": 3}, {"from": "order", "to": "empire", "width": 2}, {"from": "order", "to": "queen", "width": 1}, {"from": "british", "to": "empire", "width": 3}, {"from": "british", "to": "queen", "width": 2}, {"from": "british", "to": "elizabeth", "width": 1}, {"from": "empire", "to": "queen", "width": 3}, {"from": "empire", "to": "elizabeth", "width": 2}, {"from": "empire", "to": "ii", "width": 1}, {"from": "queen", "to": "elizabeth", "width": 3}, {"from": "queen", "to": "ii", "width": 2}, {"from": "queen", "to": "28", "width": 1}, {"from": "elizabeth", "to": "ii", "width": 3}, {"from": "elizabeth", "to": "28", "width": 2}, {"from": "elizabeth", "to": "march", "width": 1}, {"from": "ii", "to": "28", "width": 3}, {"from": "ii", "to": "march", "width": 2}, {"from": "ii", "to": "1972", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
