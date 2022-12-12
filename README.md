@@ -5,7 +5,8 @@
 I'm in the process of replicating the "Infranodus" commercial software in python. It makes network graphs out of text, establishes weight between words based on how close they appear in the original text (`Word 1` -> `Word 2` gets a high weight, `Word 1` -> `Word 3` gets a medium weight, `Word 1` -> `Word 4` gets a low weight, `Word 1` -> `Word 4` is not connected). These plots scale the nodes by how many connections they have, so the "most important" words should scale up.  
 
 ### Examples
-Check out the .html files in this repository.  
+- [Apollo 17](https://decafsunrise.github.io/In-free-nodus/Apollo%2017.html)
+- [2022 Russian Invasion of Ukraine](https://decafsunrise.github.io/In-free-nodus/RUS%20UKR%20Invasion%202022.html)  
 So far it seems to check out; "Moon" is huge in the Apollo graph, and "Invasion" is big in the UKR graph. The input was the first paragraph of each topic's wikipedia page (and that's why you'll see some random number trash after certain words, it's a slightly cleaned footnote number).  
 
 ### To Do
