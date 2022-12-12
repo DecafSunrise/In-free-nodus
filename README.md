@@ -7,6 +7,7 @@ I'm in the process of replicating the "Infranodus" commercial software in python
 ### Examples
 - [Apollo 17](https://decafsunrise.github.io/In-free-nodus/Apollo%2017.html)
 - [2022 Russian Invasion of Ukraine](https://decafsunrise.github.io/In-free-nodus/RUS%20UKR%20Invasion%202022.html)  
+- [J.R.R. Tolkien](https://decafsunrise.github.io/In-free-nodus/tolkien.html)  
 So far it seems to check out; "Moon" is huge in the Apollo graph, and "Invasion" is big in the UKR graph. The input was the first paragraph of each topic's wikipedia page (and that's why you'll see some random number trash after certain words, it's a slightly cleaned footnote number).  
 
 ### To Do
